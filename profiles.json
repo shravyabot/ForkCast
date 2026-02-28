@@ -1,0 +1,5 @@
+{
+  "Bavana": {"name": "Bavana", "avatar": "👩‍🍳", "age": 25, "height_cm": 160.0, "weight_kg": 70.0, "gender": "Female", "activity": "Moderately Active", "goal": "maintenance"},
+  "Kiran": {"name": "Kiran", "avatar": "👨‍🍳", "age": 24, "height_cm": 180.0, "weight_kg": 70.0, "gender": "Male", "activity": "Moderately Active", "goal": "maintenance"},
+  "Parvathi": {"name": "Parvathi", "avatar": "🧑‍🍳", "age": 22, "height_cm": 170.0, "weight_kg": 70.0, "gender": "Female", "activity": "Moderately Active", "goal": "maintenance"}
+}
