@@ -9,13 +9,17 @@ import streamlit as st
 
 def _get(key, default=""):
     """Read from Streamlit secrets first, then env vars."""
+    # 1. Try st.secrets (Streamlit Cloud)
     try:
-        val = st.secrets.get(key, None)
-        if val is not None:
-            return str(val)
+        if hasattr(st, "secrets") and key in st.secrets:
+            return str(st.secrets[key])
     except Exception:
         pass
-    return os.getenv(key, default)
+    # 2. Try environment variable
+    val = os.environ.get(key)
+    if val:
+        return val
+    return default
 
 # API Keys
 OPENAI_API_KEY = _get("OPENAI_API_KEY")
@@ -29,3 +33,12 @@ NEO4J_DATABASE = _get("NEO4J_DATABASE", "neo4j")
 
 # OpenAI
 OPENAI_MODEL = _get("OPENAI_MODEL", "gpt-4o")
+
+# Warn if keys are missing
+if not TAVILY_API_KEY or not OPENAI_API_KEY:
+    st.error(
+        "⚠️ **Missing API keys!** Go to App Settings → Secrets and add:\n\n"
+        "```\nTAVILY_API_KEY = \"your-key\"\nOPENAI_API_KEY = \"your-key\"\n"
+        "NEO4J_URI = \"your-uri\"\nNEO4J_USER = \"neo4j\"\nNEO4J_PASSWORD = \"your-password\"\n```"
+    )
+    st.stop()
