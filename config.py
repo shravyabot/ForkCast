@@ -1,14 +1,18 @@
 import os
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-load_dotenv()
+import streamlit as st
 
-# Helper: read from Streamlit Cloud secrets first, then env vars
 def _get(key, default=""):
+    """Read from Streamlit secrets first, then env vars."""
     try:
-        import streamlit as st
-        if key in st.secrets:
-            return st.secrets[key]
+        val = st.secrets.get(key, None)
+        if val is not None:
+            return str(val)
     except Exception:
         pass
     return os.getenv(key, default)
